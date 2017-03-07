@@ -18,13 +18,30 @@
         android:layout_centerInParent="true"
         android:text="Hello World!"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
         android:layout_alignParentBottom="true"
-        android:text="bind service"
-        android:textColor="@android:color/white"
-        android:onClick="bindService"/>
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/serviceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:onClick="bindService"
+            android:text="bind service"
+            android:textColor="@android:color/white"/>
+
+        <Button
+            android:id="@+id/proxyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="hookClipboard"
+            android:text="hook clipboard"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

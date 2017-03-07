@@ -1,7 +1,9 @@
 package com.javayhu.plugin;
 
 import android.app.Service;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             mPluginService = IPluginAidlInterface.Stub.asInterface(service);
             Log.d("plugin", String.valueOf(Process.myPid()));
             try {
-                String result = mPluginService.getPlugin("demo");
+                String result = mPluginService.getPlugin("service");
                 Log.d("plugin", result);
                 mTextView.setText(result);
             } catch (RemoteException e) {
@@ -52,5 +54,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, PluginService.class);
         bindService(intent, connection, Service.BIND_AUTO_CREATE);
+    }
+
+    public void hookClipboard(View view) {
+        try {
+            ClipboardHelper.binder();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboardManager.hasPrimaryClip()) {
+            mTextView.setText(clipboardManager.getPrimaryClip().getItemAt(0).getText());
+        }
     }
 }
